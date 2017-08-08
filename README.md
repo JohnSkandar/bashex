@@ -15,3 +15,6 @@ Works also from 32-bit shell, as it calls `C:\Windows\sysnative\bash.exe`.
 `bashex.exe vi "E:\My documents\my file.txt"`
 translates to:
 `bash -c "vi '/mnt/e/My documents/my file.txt'"`
+
+# Building
+The solution was created with Visual Studio 2017. When opening in previous versions, it can be necessary to retarget the solution to the Windows SDK version installed.
