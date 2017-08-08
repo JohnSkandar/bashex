@@ -32,7 +32,7 @@ int wmain(int argc, wchar_t *argv[])
 			cmd = L"'" + cmd + L"'";
 		}
 		// files in other directories (beginning with "drive:\")
-		else if (cmd.GetLength() >= 3 && cmd.Mid(1, 2).Compare(L":\\") == 0)
+		else if (cmd.GetLength() >= 3 && iswalpha(cmd[0]) && cmd.Mid(1, 2).Compare(L":\\") == 0)
 		{
 			// path is translated to "/mnt/drive/..."
 			cmd.Format(L"'/mnt/%s/%s'", cmd.Left(1).MakeLower(), cmd.Right(cmd.GetLength() - 3));
