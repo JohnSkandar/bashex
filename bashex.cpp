@@ -29,20 +29,25 @@ int wmain(int argc, wchar_t *argv[])
 		{
 			// path is translated to "./..."
 			cmd.Replace(L"\\", L"/");
-			cmd = L"'" + cmd + L"'";
+			cmd.Replace(L"'", L"\\'");	// escape '
+			cmd = L"$'" + cmd + L"'";
 		}
 		// files in other directories (beginning with "drive:\")
 		else if (cmd.GetLength() >= 3 && iswalpha(cmd[0]) && cmd.Mid(1, 2).Compare(L":\\") == 0)
 		{
 			// path is translated to "/mnt/drive/..."
-			cmd.Format(L"'/mnt/%s/%s'", cmd.Left(1).MakeLower(), cmd.Right(cmd.GetLength() - 3));
+			cmd.Format(L"/mnt/%s/%s", cmd.Left(1).MakeLower(), cmd.Right(cmd.GetLength() - 3));
 			cmd.Replace(L"\\", L"/");
+			cmd.Replace(L"'", L"\\'");	// escape '
+			cmd = L"$'" + cmd + L"'";
 		}
 		out_command += L" " + cmd;
 	}
 
 	out_command += L"\"";
-	wprintf(out_command);
+#ifdef DEBUG
+	wprintf(out_command + L"\n");
+#endif
 	_wsystem(out_command);
 	return 0;
 }
